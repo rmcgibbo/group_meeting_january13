@@ -1,0 +1,532 @@
+<!--
+slidedeck: A modification of the Google IO 2012 HTML5 slide template
+URL: https://github.com/rmcgibbo/slidedeck
+
+Based on https://github.com/francescolaffi/elastic-google-io-slides, and
+ultimately:
+
+Google IO 2012 HTML5 Slide Template
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahe <lukem@google.com>
+URL: https://code.google.com/p/io-2012-slides
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Presentation</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+   <link rel="shortcut icon" href=" http://www.stanford.edu/favicon.ico"/> 
+  <link rel="stylesheet" media="all" href="theme/css/default.css">
+  <link rel="stylesheet" media="all" href="theme/css/custom.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="theme/css/phone.css">
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="js/slides" src="js/require-1.0.8.min.js"></script>
+
+  <script type="text/javascript">
+  // window.setInterval(function () {
+  //     window.location.reload(true);
+  // }, 3000);
+  </script>
+
+  <!-- MathJax support  -->
+  <script type="text/x-mathjax-config">
+  // MathJax.Hub.Config({
+  //   extensions: ["tex2jax.js"],
+  //   jax: ["input/TeX", "output/HTML-CSS"],
+  //   showProcessingMessages: false,
+  //   tex2jax: {
+  //     inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+  //     displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+  //     processEscapes: true
+  //   },
+  //   TeX: {
+  //     Macros: {
+  //       RR: "{\\bf R}",
+  //       bold: ["{\\bf #1}",1]
+  //    }
+  //   },
+  //   "HTML-CSS": { availableFonts: ["TeX"] }
+  // });
+  </script>
+<!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+<slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+
+    <h1 style="right:5px;"> <div style="position:relative; left:-50px"> Hidden Markov Models are Better </div></h1>
+    <h2> <div style="position:relative; left:-50px"> with Applications to Ubiquitin </div></h2>
+    <p> <span  style="position:relative; left:-50px"> Robert McGibbon </span><br/> <span  style="position:relative; left:-50px"> Pande Group Meeting. January 13, 2014 </span></p>
+  </hgroup>
+</slide>
+
+
+<slide  >
+  
+    <hgroup>
+      <h2>Biology at the Atomic Length Scale</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p><center><img height=400  src="figures/U1CP1-1_SizeScale_ksm.jpg" /></center>
+<footer class="source"> http://www.nature.com/scitable/topicpage/what-is-a-cell-14023083</footer></p></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Biology at the Atomic Length Scale</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p><center>
+<table><tr>
+  <td> <img height=200 src="figures/Mallacci-Brain-122-1823-1999-image.png"/> </td>
+  <td> <img width=600 src="figures/Mallacci-Brain-122-1823-1999-title.png"/> </td>
+</tr></table>
+<img width=500 src="figures/Alanine-Valine.png"/>
+</center></p>
+<footer class="source">
+G.R Mallucci et. al., <i>Brain</i> 122, 1823 (1999).
+</footer></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Experiments Can't Do It Alone</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p><center style="margin-top:-20px">
+<img height=230 src="figures/1-s2.0-S0022283697914546-gr9b.gif"/>
+<img height=230 src="figures/F4.large.jpg"/>
+<img height=230 src="figures/nmeth1010-775c-F1.jpg"/>
+<br/>
+<img height=230 src="figures/1-s2.0-S0959440X03000113-gr4.gif"/>
+<img height=230 src="figures/xraydensity.jpg"/>
+<img height=230 src="figures/hd-exchange.jpg"/>
+<img height=230 src="figures/2dir.jpg"/>
+</center></p>
+<footer class="source">
+<div style="margin-top:-25px">
+S. Westenhoff et al., <i>Nature Methods</i> 7, 775 (2010). &nbsp; | &nbsp;
+G. Panick et al., <i> J. Mol. Biol. </i> 275 389 (1998)  &nbsp; | &nbsp;
+Y Li et al., <i>J. Biol. Chem.</i> 277 33018 (2002) <br/> 
+X. Zhuang; M. Rief, <i>Curr. Opin. Struct. Biol</i> 13 88 (2003) &nbsp; | &nbsp;
+J. J. Englander et al., <i> Proc. Natl. Acad. Sci. U.S.A. </i> 100 7057 (2003) <br/>
+I J. Finkelstein et al., <i> Proc. Natl. Acad. Sci. U.S.A. </i> 104 2637 (2007)
+</div>
+</footer></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Molecular Dynamics</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p><center>
+<img style="float:left;" height=400 src="figures/vdw-protein-water.png"/>
+<div style="margin:5  0px">
+  <img height=150 src="figures/amber-functional-form.png"/>
+</div>
+</center></p>
+<ul>
+<li>Calculate the atomic-level physical interactions in the system</li>
+<li>Numerically integrate the equations of motion</li>
+</ul>
+<footer class="source">
+W. D. Cornell et. al., <i>J. Am. Chem. Soc.</i> 117, 5179 (1995).
+</footer></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Predictive and Interpretable models from MD</h2>
+      <h3>Models are required to <i>understand</i> MD</h3>
+    </hgroup>
+    <article ><div style="float:right; position:relative; left:-50px; top:-120px">
+    <center><img height=230 src="figures/fah.jpeg" /></center>
+    <center><img height=230 src="figures/anton.jpg" /></center>
+</div>
+
+<p><img height=220 src="figures/lane_paper_quote.png" /></p>
+<footer class="source">
+Lane, T.J., et al. "To milliseconds and beyond: challenges in the simulation of protein folding." Current opinion in structural biology (2012).
+</footer></article>
+ 
+</slide>
+
+<slide class="segue dark nobackground" >
+  
+    <!-- <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside> -->
+    <hgroup class="auto-fadein">
+      <h2>MSMs and HMMs</h2>
+      <h3></h3>
+    </hgroup>
+  
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Accuracy vs. Interpretability</h2>
+      <h3>Goal: Accelerate scientific insight about structure and dynamics</h3>
+    </hgroup>
+    <article ><div style="float:right;"><img height=300 src=figures/figure_1.png /></div>
+
+<ul>
+<li>General tradeoff between model accuracy and interpretability</li>
+<li>In machine learning, prediction accuracy is all that matters<ul>
+<li>I don't care 'how' your deep neural net recognizes a cat</li>
+</ul>
+</li>
+<li>In physics, accuracy without interpretability is the reductionist folly.<ul>
+<li>Laplace's demon won't solve protein folding.</li>
+</ul>
+</li>
+</ul></article>
+ 
+</slide>
+
+<slide class="img-top-center" >
+  
+    <hgroup>
+      <h2>Markov State Models</h2>
+      <h3>States and Rates</h3>
+    </hgroup>
+    <article ><div style="position:relative; top:-50px" class="vcenter flexbox">
+    <img width=500 src="figures/MSM_St_PGM.png"/>
+</div>
+
+<div style="position:relative; top:-50px" >
+<ul>
+    <li>Discretize phase space into $N$ disjoint sets (how?), time into intervals $\tau$. </li>
+    <li>Model evolution on the sets as 1st order Markov process</li>
+</ul>
+    $$
+    T_{ij} = \mathbb{P}\left[ \mathbf{x}(t+\tau) \in S_j | \mathbf{x}(t) \in S_i \right]
+    $$
+<ul>
+    <li>Estimate $T_{ij}$ by counting observed transitions in a collection of equilibrium trajectories</li>
+</ul>
+</div>
+
+<footer class="source">
+    <br/>
+Prinz, Jan-Hendrik, et al. "Markov models of molecular kinetics: Generation and validation." JCP 134 (2011)
+</footer></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Accuracy Problems with MSMs</h2>
+      <h3>What's holding us back?</h3>
+    </hgroup>
+    <article ><div style="float:right; font-size:80%; position:relative; top:-60px;">
+$$ \mathcal{C}^* = \underset{\mathcal{C}} {\operatorname{argmax}}
+\underbrace{\; \left[-\sum_{i=1}^{N} \sum_{\mathbf x_j \in \mathcal{C}_i} d(\mathbf x_j, \mu_i)^2\right]}_\text{clustering quality} $$
+
+$$ \mathbf{T}^* = \underset{\mathbf{T}}{\operatorname{argmax}} \underbrace{\prod_i^{N-1} \mathbf{T}({c_{x_i} \rightarrow c_{x_{i+1}}})}_{\mathbf{T} \text{ quality, given } \mathcal{C}}$$
+
+$$\{\mathcal{C}^*, \mathbf{T}^*\} \neq\underset{\mathcal{C}, \mathbf{T}} {\operatorname{argmax}} f(\{\mathcal{C}, \mathbf{T}\}; \mathbf{x})$$
+</div>
+
+<p>Optimization:</p>
+<ul>
+<li>Our MSM construction does not attempt optimize any <em>single</em> objective function</li>
+<li>Independent optimization of states and rates -- no unified framework.</li>
+</ul></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Accuracy Problems with MSMs</h2>
+      <h3>What's holding us back?</h3>
+    </hgroup>
+    <article ><div style="float:right; position:relative; left:20px; top:-100px"><img height=550 src=figures/doublewell-msm-only.png /></div>
+
+<ul>
+<li>
+<p>Brittleness: fluctuations at the of barriers &amp; "hard" state definitions lead to <em>bias</em> towards overestimated transition rates.</p>
+</li>
+<li>
+<p>Statistical error: use of tens of thousands of states leads to high variance estimators.</p>
+</li>
+</ul>
+<footer class="source">
+<a 
+href="http://link.springer.com/chapter/10.1007%2F978-94-007-7606-7_2
+style="text-decoration:none;"">
+Bowman, G. "An Overview and Practical Guide to Building Markov State Models"</a>
+<br/>
+<a style="text-decoration:none"
+href="http://dx.doi.org/10.1063/1.3590108"
+style="text-decoration:none;">
+Schütte, C. et. el. "Markov state models based on milestoning"</a>
+</footer></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Interpretability Problems with MSMs</h2>
+      <h3>What's holding us back?</h3>
+    </hgroup>
+    <article ><div style="float:right; position:relative;"><img height=300 src=figures/doublewell-eigenfunctions-msm.png />
+<p style="margin-left:30px; font-size:60%">
+Even in a double well potential, quantitatively <br/>
+resolving the eigenfunctions requires <br />
+more than two MSM states.
+</p>
+</div>
+
+<ul>
+<li>Difficulty of interpretation is proportional to the number of states<ul>
+<li>And many are needed for accurate predictions.</li>
+</ul>
+</li>
+<li>Even tougher to visualize the eigenprocesses when the states are implicitly defined (e.g. RMSD)</li>
+</ul></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>What's an HMM?</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><div style="position:relative; top:-50px" class="vcenter">
+    <img style="float:left;" width=500 src="figures/HMM_PGM.png"/>
+    <div style="float:right; font-size:90%">
+    $$ S_0 \sim \operatorname{Multinomial}(\pi) $$
+    $$ S_{t+1} \sim \operatorname{Multinomial}(\mathbf{T}_{s_t}) $$
+    $$ X_{t} \sim f(\,\cdot\,; \theta_{s_t}) $$
+    </div>
+    <div style="clear:both"></div>
+</div>
+
+<ul>
+<li>States are <em>unobserved</em>, but an output, dependent probabilistically on the state, is visible.</li>
+<li>Each state is equipped with an <em>output distribution</em> $f(\mathbf{x}; \theta_s)$, which need not be orthogonal.</li>
+</ul>
+<div style="font-size:90%"> $$
+f(\mathbf{x}; \theta_{s_t}) = \mathbb{P}(X_t = \mathbf{x} | S_t = s)
+$$ </div></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Likelihood function</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p>Joint distribution over a data <em>and</em> state sequence from $0$ to $t$</p>
+<div> $$
+\mathbb{P}(\mathbf{x}_{0:t}, s_{0:t}) = \pi_{s_0} f(\mathbf{x}_0; \theta_{s_0}) \prod_{i=1}^t \bold{T}_{s_t, s_{t+1}} \cdot f(\mathbf{x}_t; \theta_{s_t})
+$$ <div>
+
+Likelihood formally requires summing over all possible paths
+
+<div> $$
+\mathcal{L} = \mathbb{P}(\mathbf{x}_{0:t} | \mathbf{T}, \theta) = \sum_{\{s_{0:t}\}} \mathbb{P}(\mathbf{x}_{0:t}, s_{0:t}) 
+$$ </div>
+
+-----
+title: Learning the model
+
+<div>
+$$
+\mathbb{P}(\mathbf{x}_{0:t} | \mathbf{T}, \theta ) = \sum_{\{s_{0:t}\}} \left[ \pi_{s_0} f(\mathbf{x}_0; \theta_{s_0}) \prod_{i=1}^t \bold{T}_{s_t, s_{t+1}} \cdot f(\mathbf{x}_t; \theta_{s_t}) \right]
+$$
+
+$$
+\{ \mathbf{T}^*, \theta^* \} = \underset{\{\mathbf{T}, \theta\}}{\operatorname{argmax}} \; \mathbb{P}(\mathbf{x}_{0:t} | \mathbf{T}, \theta )
+$$
+</div>
+
+<ul>
+<li>We fit the <em>maximum likelihood</em> model, adjusting the transition matrix, states' means, and (co)variances.</li>
+<li>Maximize the probability that the model would <em>generate</em> the observed data, if we sampled from the HMM.</li>
+</ul></article>
+ 
+</slide>
+
+<slide class="segue dark nobackground" >
+  
+    <!-- <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside> -->
+    <hgroup class="auto-fadein">
+      <h2>HMM Details</h2>
+      <h3></h3>
+    </hgroup>
+  
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Learning the model</h2>
+      <h3>Baum-Welch (EM)</h3>
+    </hgroup>
+    <article ><ul>
+<li>E-step: computed expected hidden state sequence, given current $\mathbf{T}, \theta$.<ul>
+<li>Distribution over the states at each time: $\mathbb{P}(S_t = i)$</li>
+<li>Computational complexity: $O(T \, N^2)$</li>
+</ul>
+</li>
+<li>M-step: Find new $\mathbf{T}, \theta$ that maximize likelihood, with $S$ fixed as above<ul>
+<li>Fitting gaussian to data, maximum likelihood reversible transition matrix.</li>
+</ul>
+</li>
+</ul></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>E-Step: Forward Algorithm</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p>Forward algorithm recursively computes the probability of of $S_t$ given the observed signal $X$ from $t=0$ to $t$.</p>
+<div style="font-size:85%">
+$$\begin{aligned}
+\alpha(s_{t+1}) = \mathbb{P}(s_{t+1}, \mathbf{x}_{0:t+1}) &amp; = \sum_{s_t} \mathbb{P} (s_{t+1}, s_t, \mathbf{x}_{0:t}, \mathbf{x}_{t+1}) \\
+&amp; = \mathbb{P}(\mathbf{x}_{t+1} | s_{t+1}) \sum_{s_t} \mathbb{P}(s_{t+1} | s_t) \mathbb{P}(s_t, \mathbf{x}_{0:t}) \\
+&amp; = f(\mathbf{x}_{t+1}; \theta_{s_{t+1}}) \sum_{s_t} \mathbf{T}_{s_t, s_{t+1}} \alpha(s_t)
+\end{aligned}$$
+
+$$
+\mathcal{L}(\mathbf{x}; \{\mathbf{T}, \theta\}) = \sum_{s_t} \mathbb{P}(s_t, x_{0:t}) = \sum_{s_t} \alpha(s_t)
+$$
+</div></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>E-Step: Backward algorithm</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p>Observations from $t=t+1$ to $T$ also give evidence about the state $S_t$ that can be computed recursively</p>
+<div style="font-size:85%">
+$$\begin{aligned}
+\beta(s_{t}) = \mathbb{P}(\mathbf{x}_{t+1:T} | s_t) &amp; = \sum_{s_{t+1}} \mathbb{P}(\mathbf{x}_{t+1:T} | s_{t+1}) \mathbb{P}(s_{t+1} | s_t) \\
+&amp; = \sum_{s_{t+1}} \mathbb{P}(\mathbf{x}_{t+1}, \mathbf{x}_{t+2:T} | s_{t+1}) \mathbb{P}(s_{t+1} | s_t) \\
+&amp; = \sum_{s_{t+1}} \mathbb{P}(\mathbf{x}_{t+1} | s_{t+1}) \mathbb{P}(\mathbf{x}_{t+2:T} | s_{t+1}) \mathbb{P}(s_{t+1} | s_t)  \\
+&amp; = \sum_{s_{t+1}} f(\mathbf{x}_{t+1}; \theta_{s_{t+1}}) \, \mathbf{T}_{s_t, s_{t+1}} \, \beta(s_{t+1}) \\
+\end{aligned}$$</article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>E-Step: Final Quantities</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><div>
+$$
+\gamma_i(t) = \mathbf{P}(S_t=i | \mathbf{x}_{0:T}) = \frac{\alpha_i(t) \beta_i(t)}{\sum_j \alpha_j(t) \beta_j(t)}
+$$
+
+$$\begin{aligned}
+\xi_{ij}(t)  &amp; = \mathbb{P}(s_t = i, s_{t+1} = j | \mathbf{x}_{0:T}) \\
+ &amp; = \frac{\alpha_i(t) \mathbf{T}_{ij} \beta_j(t+1) f(\mathbf{x}_{t+1}; \theta_{s_j})}{\sum_{kl} \alpha_k(t) \mathbf{T}_{kl}  \beta_l(t+1)  f(\mathbf{x}_{t+1};  \theta_{s_l}) }
+\end{aligned}$$
+</div></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>M-Step: Update Equations</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><p>$$
+\mu_i = \frac{\sum_t \gamma_i(t) \mathbf{x}_t}{\sum_t \gamma_i(t)}
+$$</p>
+<p>$$
+\sigma^2_i = \frac{\sum_t \gamma_i(t) (x_t-\mu_i)^2}{\sum_t \gamma_i(t)}
+$$</p>
+<p>$$
+\mathbf{T} &amp;= \underset{\mathbf{T}} {\operatorname{argmax}} \sum_{ij} \log (\mathbf{T}<em>{ij}) \sum_t \xi</em>{ij}(t)
+$$</p></article>
+ 
+</slide>
+
+<slide class="segue dark nobackground" >
+  
+    <!-- <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside> -->
+    <hgroup class="auto-fadein">
+      <h2>L1 Regularization</h2>
+      <h3></h3>
+    </hgroup>
+  
+</slide>
+
+<slide class="segue dark nobackground" >
+  
+    <!-- <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside> -->
+    <hgroup class="auto-fadein">
+      <h2>L1-regularization</h2>
+      <h3></h3>
+    </hgroup>
+  
+</slide>
+
+
+<slide class="thank-you-slide segue nobackground">
+  <!-- <aside class="gdbar right"><img src="images/google_developers_icon_128.png"></aside> -->
+  <article class="flexbox vleft auto-fadein">
+    <h2> Thanks everyone!</h2>
+    <p> And especially these people:</p>
+  </article>
+  <p data-config-contact class="auto-fadein"> <span>www</span> <a href="http://www.google.edu/">website</a><br/> <span>github</span> <a href="http://github.com">username</a></p>
+  </p>
+</slide>
+
+<slide class="backdrop"></slide>
+
+</slides>
+
+<script>
+// var _gaq = _gaq || [];
+// _gaq.push(['_setAccount', 'UA-XXXXXXXX-1']);
+// _gaq.push(['_trackPageview']);
+// 
+// (function() {
+//   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+// })();
+</script>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
