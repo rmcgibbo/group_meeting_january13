@@ -35,26 +35,26 @@ URL: https://code.google.com/p/io-2012-slides
   </script>
 
   <!-- MathJax support  -->
-  <script type="text/x-mathjax-config">
-  // MathJax.Hub.Config({
-  //   extensions: ["tex2jax.js"],
-  //   jax: ["input/TeX", "output/HTML-CSS"],
-  //   showProcessingMessages: false,
-  //   tex2jax: {
-  //     inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-  //     displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-  //     processEscapes: true
-  //   },
-  //   TeX: {
-  //     Macros: {
-  //       RR: "{\\bf R}",
-  //       bold: ["{\\bf #1}",1]
-  //    }
-  //   },
-  //   "HTML-CSS": { availableFonts: ["TeX"] }
-  // });
+  <script type="text/x-mathjax-config"> 
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    showProcessingMessages: false,
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    TeX: {
+      Macros: {
+        RR: "{\\bf R}",
+        bold: ["{\\bf #1}",1]
+     }
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
   </script>
-<!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 </head>
 
@@ -350,12 +350,17 @@ Likelihood formally requires summing over all possible paths
 
 <div> $$
 \mathcal{L} = \mathbb{P}(\mathbf{x}_{0:t} | \mathbf{T}, \theta) = \sum_{\{s_{0:t}\}} \mathbb{P}(\mathbf{x}_{0:t}, s_{0:t}) 
-$$ </div>
+$$ </div></article>
+ 
+</slide>
 
------
-title: Learning the model
-
-<div>
+<slide  >
+  
+    <hgroup>
+      <h2>Learning the model</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><div>
 $$
 \mathbb{P}(\mathbf{x}_{0:t} | \mathbf{T}, \theta ) = \sum_{\{s_{0:t}\}} \left[ \pi_{s_0} f(\mathbf{x}_0; \theta_{s_0}) \prod_{i=1}^t \bold{T}_{s_t, s_{t+1}} \cdot f(\mathbf{x}_t; \theta_{s_t}) \right]
 $$
@@ -447,12 +452,10 @@ $$\begin{aligned}
       <h3></h3>
     </hgroup>
     <article ><div>
-$$
-\gamma_i(t) = \mathbf{P}(S_t=i | \mathbf{x}_{0:T}) = \frac{\alpha_i(t) \beta_i(t)}{\sum_j \alpha_j(t) \beta_j(t)}
-$$
-
 $$\begin{aligned}
-\xi_{ij}(t)  &amp; = \mathbb{P}(s_t = i, s_{t+1} = j | \mathbf{x}_{0:T}) \\
+\gamma_i(t) &amp; = \mathbb{P}(S_t=i | \mathbf{x}_{0:T}) \\
+&amp; = \frac{\alpha_i(t) \beta_i(t)}{\sum_j \alpha_j(t) \beta_j(t)} \\
+\xi_{ij}(t)  &amp; = \mathbb{P}(S_t = i, S_{t+1} = j | \mathbf{x}_{0:T}) \\
  &amp; = \frac{\alpha_i(t) \mathbf{T}_{ij} \beta_j(t+1) f(\mathbf{x}_{t+1}; \theta_{s_j})}{\sum_{kl} \alpha_k(t) \mathbf{T}_{kl}  \beta_l(t+1)  f(\mathbf{x}_{t+1};  \theta_{s_l}) }
 \end{aligned}$$
 </div></article>
@@ -466,45 +469,104 @@ $$\begin{aligned}
       <h3></h3>
     </hgroup>
     <article ><p>$$
-\mu_i = \frac{\sum_t \gamma_i(t) \mathbf{x}_t}{\sum_t \gamma_i(t)}
+^{(k+1)} \mu_i = \frac{\sum_t \gamma_i(t) \mathbf{x}_t}{\sum_t \gamma_i(t)}
 $$</p>
 <p>$$
-\sigma^2_i = \frac{\sum_t \gamma_i(t) (x_t-\mu_i)^2}{\sum_t \gamma_i(t)}
+^{(k+1)} \sigma^2_i = \frac{\sum_t \gamma_i(t) (\mathbf{x}_t-\mu_i)^2}{\sum_t \gamma_i(t)}
 $$</p>
-<p>$$
-\mathbf{T} &amp;= \underset{\mathbf{T}} {\operatorname{argmax}} \sum_{ij} \log (\mathbf{T}<em>{ij}) \sum_t \xi</em>{ij}(t)
-$$</p></article>
+<div>$$
+^{(k+1)} \mathbf{T} = \underset{\mathbf{T}} {\operatorname{argmax}} \sum_{ij} \log (\mathbf{T}_{ij}) \sum_t \xi_{ij}(t)
+$$</div></article>
  
 </slide>
 
-<slide class="segue dark nobackground" >
+<slide  >
   
-    <!-- <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside> -->
-    <hgroup class="auto-fadein">
+    <hgroup>
       <h2>L1 Regularization</h2>
       <h3></h3>
     </hgroup>
-  
+    <article ></article>
+ 
 </slide>
 
-<slide class="segue dark nobackground" >
+<slide  >
   
-    <!-- <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside> -->
-    <hgroup class="auto-fadein">
-      <h2>L1-regularization</h2>
-      <h3></h3>
+    <hgroup>
+      <h2>Tradeoffs</h2>
+      <h3>Losses in using the HMM over the MSM</h3>
     </hgroup>
+    <article ><ul>
+<li>Evolution of $X_t$ in the HMM is <em>not</em> Markovian.<ul>
+<li><span>$\mathbb{P}(X_t | X_{t-1}, X_{t-2}, \ldots) \neq \mathbb{P}(X_t | X_{t-1} )$</span></li>
+</ul>
+</li>
+<li>HMM is <em>not</em> a direct discretization of the transfer operator.<ul>
+<li>Connections to spectral theory / operators are weaker.</li>
+</ul>
+</li>
+<li>Each conformation $X_t$ is <em>not</em> uniquely assigned to a single state.</li>
+<li>Fitting with very large numbers of states is not practical.</li>
+</ul></article>
+ 
+</slide>
+
+<slide  >
   
+    <hgroup>
+      <h2>Tradeoffs</h2>
+      <h3>Gains in using the HMM over the MSM</h3>
+    </hgroup>
+    <article ><p><img style="float:right; position:relative; top:-120px" height=550px src="figures/doublewell-hmm-and-msm.png" /></p>
+<ul>
+<li>None of the arbitrariness of the MSM state decomposition<ul>
+<li>The state locations and widths can be <span style="font-weight:bold"> optimized</span></li>
+</ul>
+</li>
+<li>All of the ML machinery is now available<ul>
+<li>Cross validation</li>
+<li>Model selection (AIC, BIC)</li>
+</ul>
+</li>
+<li>Direct macrostate models</li>
+</ul></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Implementation</h2>
+      <h3>CPU (SSE+OpenMP), CUDA</h3>
+    </hgroup>
+    <article ><pre class="prettyprint" data-lang="python">
+>>> import numpy as np
+>>> import mdtraj as md
+>>>
+>>> trajectory = md.load('trajectory.xtc', top='structure.pdb')
+>>> distances = md.compute_distances(trajectory, np.loadtxt('AtomIndices.dat'))
+>>>
+>>> from mixtape.ghmm import GaussianFusionHMM
+>>> model = GaussianFusionHMM(n_states=4, n_features=len(atom_indices), platform=<b>'cuda'</b>)
+>>> model.fit([distances])
+>>>
+>>> print model.transmat_
+[[ 0.966  0.033  0.001  0.001]
+ [ 0.002  0.945  0.002  0.051]
+ [ 0.001  0.012  0.959  0.028]
+ [ 0.021  0.038  0.029  0.912 ]]
+</pre></article>
+ 
 </slide>
 
 
 <slide class="thank-you-slide segue nobackground">
   <!-- <aside class="gdbar right"><img src="images/google_developers_icon_128.png"></aside> -->
   <article class="flexbox vleft auto-fadein">
-    <h2> Thanks everyone!</h2>
-    <p> And especially these people:</p>
+    <h2> Thanks Everyone!</h2>
+    <p> Especially Vijay, Bharath, Christian, and Matt.</p>
   </article>
-  <p data-config-contact class="auto-fadein"> <span>www</span> <a href="http://www.google.edu/">website</a><br/> <span>github</span> <a href="http://github.com">username</a></p>
+  <p data-config-contact class="auto-fadein"> <span>www</span> <a href="http://www.rmcgibbo.appspot.com/">website</a><br/> <span>github</span> <a href="http://github.com/rmcgibbo">rmcgibbo</a></p>
   </p>
 </slide>
 

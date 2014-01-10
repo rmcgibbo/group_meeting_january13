@@ -2,10 +2,10 @@
 % subtitle: <div style="position:relative; left:-50px"> with Applications to Ubiquitin </div>
 % author: <span  style="position:relative; left:-50px"> Robert McGibbon </span>
 % author: <span  style="position:relative; left:-50px"> Pande Group Meeting. January 13, 2014 </span>
-% thankyou: Thanks everyone!
-% thankyou_details: And especially these people:
-% contact: <span>www</span> <a href="http://www.google.edu/">website</a>
-% contact: <span>github</span> <a href="http://github.com">username</a>
+% thankyou: Thanks Everyone!
+% thankyou_details: Especially Vijay, Bharath, Christian, and Matt.
+% contact: <span>www</span> <a href="http://www.rmcgibbo.appspot.com/">website</a>
+% contact: <span>github</span> <a href="http://github.com/rmcgibbo">rmcgibbo</a>
 % favicon: http://www.stanford.edu/favicon.ico
 
 ---
@@ -235,7 +235,8 @@ Likelihood formally requires summing over all possible paths
 \mathcal{L} = \mathbb{P}(\mathbf{x}_{0:t} | \mathbf{T}, \theta) = \sum_{\{s_{0:t}\}} \mathbb{P}(\mathbf{x}_{0:t}, s_{0:t}) 
 $$ </div>
 
------
+
+---
 title: Learning the model
 
 <div>
@@ -301,12 +302,10 @@ $$\begin{aligned}
 title: E-Step: Final Quantities
 
 <div>
-$$
-\gamma_i(t) = \mathbf{P}(S_t=i | \mathbf{x}_{0:T}) = \frac{\alpha_i(t) \beta_i(t)}{\sum_j \alpha_j(t) \beta_j(t)}
-$$
-
 $$\begin{aligned}
-\xi_{ij}(t)  &amp; = \mathbb{P}(s_t = i, s_{t+1} = j | \mathbf{x}_{0:T}) \\
+\gamma_i(t) &amp; = \mathbb{P}(S_t=i | \mathbf{x}_{0:T}) \\
+&amp; = \frac{\alpha_i(t) \beta_i(t)}{\sum_j \alpha_j(t) \beta_j(t)} \\
+\xi_{ij}(t)  &amp; = \mathbb{P}(S_t = i, S_{t+1} = j | \mathbf{x}_{0:T}) \\
  &amp; = \frac{\alpha_i(t) \mathbf{T}_{ij} \beta_j(t+1) f(\mathbf{x}_{t+1}; \theta_{s_j})}{\sum_{kl} \alpha_k(t) \mathbf{T}_{kl}  \beta_l(t+1)  f(\mathbf{x}_{t+1};  \theta_{s_l}) }
 \end{aligned}$$
 </div>
@@ -315,22 +314,64 @@ $$\begin{aligned}
 title: M-Step: Update Equations
 
 $$
-\mu_i = \frac{\sum_t \gamma_i(t) \mathbf{x}_t}{\sum_t \gamma_i(t)}
+^{(k+1)} \mu_i = \frac{\sum_t \gamma_i(t) \mathbf{x}_t}{\sum_t \gamma_i(t)}
 $$
 
 $$
-\sigma^2_i = \frac{\sum_t \gamma_i(t) (x_t-\mu_i)^2}{\sum_t \gamma_i(t)}
+^{(k+1)} \sigma^2_i = \frac{\sum_t \gamma_i(t) (\mathbf{x}_t-\mu_i)^2}{\sum_t \gamma_i(t)}
 $$
 
-$$
-\mathbf{T} &= \underset{\mathbf{T}} {\operatorname{argmax}} \sum_{ij} \log (\mathbf{T}_{ij}) \sum_t \xi_{ij}(t)
-$$
+<div>$$
+^{(k+1)} \mathbf{T} = \underset{\mathbf{T}} {\operatorname{argmax}} \sum_{ij} \log (\mathbf{T}_{ij}) \sum_t \xi_{ij}(t)
+$$</div>
 
 ---
 title: L1 Regularization
-class: segue dark nobackground
 
 ---
-title: L1-regularization
-class: segue dark nobackground
+title: Tradeoffs
+subtitle: Losses in using the HMM over the MSM
 
+- Evolution of $X_t$ in the HMM is _not_ Markovian.
+    - <span>$\mathbb{P}(X_t | X_{t-1}, X_{t-2}, \ldots) \neq \mathbb{P}(X_t | X_{t-1} )$</span>
+- HMM is _not_ a direct discretization of the transfer operator.
+    - Connections to spectral theory / operators are weaker.
+- Each conformation $X_t$ is _not_ uniquely assigned to a single state.
+- Fitting with very large numbers of states is not practical.
+
+---
+title: Tradeoffs
+subtitle: Gains in using the HMM over the MSM
+
+<img style="float:right; position:relative; top:-120px" height=550px src="figures/doublewell-hmm-and-msm.png" />
+
+
+- None of the arbitrariness of the MSM state decomposition
+    - The state locations and widths can be <span style="font-weight:bold"> optimized</span>
+- All of the ML machinery is now available
+    - Cross validation
+    - Model selection (AIC, BIC)
+- Direct macrostate models
+
+
+---
+title: Implementation
+subtitle: CPU (SSE+OpenMP), CUDA
+
+<pre class="prettyprint" data-lang="python">
+>>> import numpy as np
+>>> import mdtraj as md
+>>>
+>>> trajectory = md.load('trajectory.xtc', top='structure.pdb')
+>>> distances = md.compute_distances(trajectory, np.loadtxt('AtomIndices.dat'))
+>>>
+>>> from mixtape.ghmm import GaussianFusionHMM
+>>> model = GaussianFusionHMM(n_states=4, n_features=len(atom_indices), platform=<b>'cuda'</b>)
+>>> model.fit([distances])
+>>>
+>>> print model.transmat_
+[[ 0.966  0.033  0.001  0.001]
+ [ 0.002  0.945  0.002  0.051]
+ [ 0.001  0.012  0.959  0.028]
+ [ 0.021  0.038  0.029  0.912 ]]
+</pre>
