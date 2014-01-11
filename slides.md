@@ -92,6 +92,7 @@ Lane, T.J., et al. "To milliseconds and beyond: challenges in the simulation of 
 
 ---
 title: MSMs and HMMs
+subtitle: How do we analyze MD?
 class: segue dark nobackground
 
 
@@ -151,36 +152,39 @@ $$ \mathbf{T}^* = \underset{\mathbf{T}}{\operatorname{argmax}} \underbrace{\prod
 $$\{\mathcal{C}^*, \mathbf{T}^*\} \neq\underset{\mathcal{C}, \mathbf{T}} {\operatorname{argmax}} f(\{\mathcal{C}, \mathbf{T}\}; \mathbf{x})$$
 </div>
 
-Optimization:
-
-- Our MSM construction does not attempt optimize any _single_ objective function
+- Our MSM construction, including the discretization, does not attempt optimize any _single_ objective function
 - Independent optimization of states and rates -- no unified framework.
 
 
-
 ---
-title: Accuracy Problems with MSMs
-subtitle: What's holding us back? 
+title: Clustering is arbitrary
 
-<div style="float:right; position:relative; left:20px; top:-100px"><img height=550 src=figures/doublewell-msm-only.png /></div>
+<img style="position:relative; top:-50px" src="figures/doublewell-msm-4-states-kmeans-vs-manual.png" height=550 />
 
 
-- Brittleness: fluctuations at the of barriers & "hard" state definitions lead to *bias* towards overestimated transition rates.
 
-- Statistical error: use of tens of thousands of states leads to high variance estimators.
+<!-- --- -->
+<!-- title: Accuracy Problems with MSMs -->
+<!-- subtitle: What's holding us back?  -->
 
-<footer class="source">
-<a 
-href="http://link.springer.com/chapter/10.1007%2F978-94-007-7606-7_2
-style="text-decoration:none;"">
-Bowman, G. "An Overview and Practical Guide to Building Markov State Models"</a>
-<br/>
-<a style="text-decoration:none"
-href="http://dx.doi.org/10.1063/1.3590108"
-style="text-decoration:none;">
-Schütte, C. et. el. "Markov state models based on milestoning"</a>
-</footer>
+<!-- <div style="float:right; position:relative; left:20px; top:-100px"><img height=550 src=figures/doublewell-msm-only.png /></div> -->
 
+
+<!-- - Brittleness: fluctuations at the of barriers & "hard" state definitions lead to *bias* towards overestimated transition rates. -->
+
+<!-- - Statistical error: use of tens of thousands of states leads to high variance estimators. -->
+
+<!-- <footer class="source"> -->
+<!-- <a  -->
+<!-- href="http://link.springer.com/chapter/10.1007%2F978-94-007-7606-7_2 -->
+<!-- style="text-decoration:none;""> -->
+<!-- Bowman, G. "An Overview and Practical Guide to Building Markov State Models"</a> -->
+<!-- <br/> -->
+<!-- <a style="text-decoration:none" -->
+<!-- href="http://dx.doi.org/10.1063/1.3590108" -->
+<!-- style="text-decoration:none;"> -->
+<!-- Schütte, C. et. el. "Markov state models based on milestoning"</a> -->
+<!-- </footer> -->
 
 
 ---
@@ -198,6 +202,8 @@ more than two MSM states.
 - Difficulty of interpretation is proportional to the number of states
     - And many are needed for accurate predictions.
 - Even tougher to visualize the eigenprocesses when the states are implicitly defined (e.g. RMSD)
+
+
 
 ---
 title: What's an HMM?
@@ -253,11 +259,6 @@ $$
 - Maximize the probability that the model would *generate* the observed data, if we sampled from the HMM.
 
 ---
-title: HMM Details
-class: segue dark nobackground
-
-
----
 title: Learning the model
 subtitle: Baum-Welch (EM)
 
@@ -266,6 +267,12 @@ subtitle: Baum-Welch (EM)
     - Computational complexity: $O(T \, N^2)$
 - M-step: Find new $\mathbf{T}, \theta$ that maximize likelihood, with $S$ fixed as above
     - Fitting gaussian to data, maximum likelihood reversible transition matrix.
+
+
+---
+title: Fitting the HMM with Baum-Welch
+subtitle: Update Equations
+class: segue dark nobackground
 
 
 ---
@@ -325,8 +332,8 @@ $$
 ^{(k+1)} \mathbf{T} = \underset{\mathbf{T}} {\operatorname{argmax}} \sum_{ij} \log (\mathbf{T}_{ij}) \sum_t \xi_{ij}(t)
 $$</div>
 
----
-title: L1 Regularization
+<!-- --- -->
+<!-- title: L1 Regularization -->
 
 ---
 title: Tradeoffs

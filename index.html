@@ -13,7 +13,7 @@ URL: https://code.google.com/p/io-2012-slides
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Presentation</title>
+  <title>Hidden Markov Models are Better</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
@@ -175,7 +175,7 @@ Lane, T.J., et al. "To milliseconds and beyond: challenges in the simulation of 
     <!-- <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside> -->
     <hgroup class="auto-fadein">
       <h2>MSMs and HMMs</h2>
-      <h3></h3>
+      <h3>How do we analyze MD?</h3>
     </hgroup>
   
 </slide>
@@ -247,9 +247,8 @@ $$ \mathbf{T}^* = \underset{\mathbf{T}}{\operatorname{argmax}} \underbrace{\prod
 $$\{\mathcal{C}^*, \mathbf{T}^*\} \neq\underset{\mathcal{C}, \mathbf{T}} {\operatorname{argmax}} f(\{\mathcal{C}, \mathbf{T}\}; \mathbf{x})$$
 </div>
 
-<p>Optimization:</p>
 <ul>
-<li>Our MSM construction does not attempt optimize any <em>single</em> objective function</li>
+<li>Our MSM construction, including the discretization, does not attempt optimize any <em>single</em> objective function</li>
 <li>Independent optimization of states and rates -- no unified framework.</li>
 </ul></article>
  
@@ -258,30 +257,43 @@ $$\{\mathcal{C}^*, \mathbf{T}^*\} \neq\underset{\mathcal{C}, \mathbf{T}} {\opera
 <slide  >
   
     <hgroup>
-      <h2>Accuracy Problems with MSMs</h2>
-      <h3>What's holding us back?</h3>
+      <h2>Clustering is arbitrary</h2>
+      <h3></h3>
     </hgroup>
-    <article ><div style="float:right; position:relative; left:20px; top:-100px"><img height=550 src=figures/doublewell-msm-only.png /></div>
+    <article ><p><img style="position:relative; top:-50px" src="figures/doublewell-msm-4-states-kmeans-vs-manual.png" height=550 /></p>
+<!-- --- -->
 
-<ul>
-<li>
-<p>Brittleness: fluctuations at the of barriers &amp; "hard" state definitions lead to <em>bias</em> towards overestimated transition rates.</p>
-</li>
-<li>
-<p>Statistical error: use of tens of thousands of states leads to high variance estimators.</p>
-</li>
-</ul>
-<footer class="source">
-<a 
-href="http://link.springer.com/chapter/10.1007%2F978-94-007-7606-7_2
-style="text-decoration:none;"">
-Bowman, G. "An Overview and Practical Guide to Building Markov State Models"</a>
-<br/>
-<a style="text-decoration:none"
-href="http://dx.doi.org/10.1063/1.3590108"
-style="text-decoration:none;">
-Schütte, C. et. el. "Markov state models based on milestoning"</a>
-</footer></article>
+<!-- title: Accuracy Problems with MSMs -->
+
+<!-- subtitle: What's holding us back?  -->
+
+<!-- <div style="float:right; position:relative; left:20px; top:-100px"><img height=550 src=figures/doublewell-msm-only.png /></div> -->
+
+<!-- - Brittleness: fluctuations at the of barriers & "hard" state definitions lead to *bias* towards overestimated transition rates. -->
+
+<!-- - Statistical error: use of tens of thousands of states leads to high variance estimators. -->
+
+<!-- <footer class="source"> -->
+
+<!-- <a  -->
+
+<!-- href="http://link.springer.com/chapter/10.1007%2F978-94-007-7606-7_2 -->
+
+<!-- style="text-decoration:none;""> -->
+
+<!-- Bowman, G. "An Overview and Practical Guide to Building Markov State Models"</a> -->
+
+<!-- <br/> -->
+
+<!-- <a style="text-decoration:none" -->
+
+<!-- href="http://dx.doi.org/10.1063/1.3590108" -->
+
+<!-- style="text-decoration:none;"> -->
+
+<!-- Schütte, C. et. el. "Markov state models based on milestoning"</a> -->
+
+<!-- </footer> --></article>
  
 </slide>
 
@@ -377,16 +389,6 @@ $$
  
 </slide>
 
-<slide class="segue dark nobackground" >
-  
-    <!-- <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside> -->
-    <hgroup class="auto-fadein">
-      <h2>HMM Details</h2>
-      <h3></h3>
-    </hgroup>
-  
-</slide>
-
 <slide  >
   
     <hgroup>
@@ -405,6 +407,16 @@ $$
 </li>
 </ul></article>
  
+</slide>
+
+<slide class="segue dark nobackground" >
+  
+    <!-- <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside> -->
+    <hgroup class="auto-fadein">
+      <h2>Fitting the HMM with Baum-Welch</h2>
+      <h3>Update Equations</h3>
+    </hgroup>
+  
 </slide>
 
 <slide  >
@@ -476,17 +488,11 @@ $$</p>
 $$</p>
 <div>$$
 ^{(k+1)} \mathbf{T} = \underset{\mathbf{T}} {\operatorname{argmax}} \sum_{ij} \log (\mathbf{T}_{ij}) \sum_t \xi_{ij}(t)
-$$</div></article>
- 
-</slide>
+$$</div>
 
-<slide  >
-  
-    <hgroup>
-      <h2>L1 Regularization</h2>
-      <h3></h3>
-    </hgroup>
-    <article ></article>
+<!-- --- -->
+
+<!-- title: L1 Regularization --></article>
  
 </slide>
 
