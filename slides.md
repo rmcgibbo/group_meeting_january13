@@ -1,10 +1,10 @@
 % title: <div style="position:relative; left:-50px"> Hidden Markov Models are Better </div>
-% subtitle: <div style="position:relative; left:-50px"> with Applications to Ubiquitin </div>
+<!-- % subtitle: <div style="position:relative; left:-50px"> with Applications to Ubiquitin </div> -->
 % author: <span  style="position:relative; left:-50px"> Robert McGibbon </span>
 % author: <span  style="position:relative; left:-50px"> Pande Group Meeting. January 13, 2014 </span>
 % thankyou: Thanks Everyone!
-% thankyou_details: Especially Vijay, Bharath, Christian, and Matt.
-% contact: <span>www</span> <a href="http://www.rmcgibbo.appspot.com/">website</a>
+% thankyou_details: Especially Vijay, Bharath, Gert, Christian, and Matt.
+% contact: <span>www</span> <a href="http://rmcgibbo.appspot.com/">website</a>
 % contact: <span>github</span> <a href="http://github.com/rmcgibbo">rmcgibbo</a>
 % favicon: http://www.stanford.edu/favicon.ico
 
@@ -123,14 +123,14 @@ class: img-top-center
 
 <div style="position:relative; top:-50px" >
 <ul>
-    <li>Discretize phase space into $N$ disjoint sets (how?), time into intervals $\tau$. </li>
-    <li>Model evolution on the sets as 1st order Markov process</li>
+    <li>Discretize phase space into $N$ disjoint sets (how?), and time into intervals $\tau$. </li>
+    <li>Model dynamics on the sets as 1st order Markov process</li>
 </ul>
-    $$
-    T_{ij} = \mathbb{P}\left[ \mathbf{x}(t+\tau) \in S_j | \mathbf{x}(t) \in S_i \right]
-    $$
+    <div>$$
+    \mathbf{T}_{ij} = \mathbb{P}\left[ \mathbf{X}(t+\tau) \in S_j | \mathbf{X}(t) \in S_i \right]
+    $$</div>
 <ul>
-    <li>Estimate $T_{ij}$ by counting observed transitions in a collection of equilibrium trajectories</li>
+    <li>Estimate $\mathbf{T}_{ij}$ by counting observed transitions in a collection of equilibrium trajectories</li>
 </ul>
 </div>
 
@@ -147,7 +147,7 @@ subtitle: What's holding us back?
 $$ \mathcal{C}^* = \underset{\mathcal{C}} {\operatorname{argmax}}
 \underbrace{\; \left[-\sum_{i=1}^{N} \sum_{\mathbf x_j \in \mathcal{C}_i} d(\mathbf x_j, \mu_i)^2\right]}_\text{clustering quality} $$
 
-$$ \mathbf{T}^* = \underset{\mathbf{T}}{\operatorname{argmax}} \underbrace{\prod_i^{N-1} \mathbf{T}({c_{x_i} \rightarrow c_{x_{i+1}}})}_{\mathbf{T} \text{ quality, given } \mathcal{C}}$$
+$$ \mathbf{T}^* = \underset{\mathbf{T}}{\operatorname{argmax}} \underbrace{\prod_i^{N-1} \mathbf{T}_{c_{x_i}, c_{x_{i+1}}}}_{\mathbf{T} \text{ quality, given } \mathcal{C}}$$
 
 $$\{\mathcal{C}^*, \mathbf{T}^*\} \neq\underset{\mathcal{C}, \mathbf{T}} {\operatorname{argmax}} f(\{\mathcal{C}, \mathbf{T}\}; \mathbf{x})$$
 </div>
@@ -193,27 +193,27 @@ subtitle: What's holding us back?
 
 <div style="float:right; position:relative;"><img height=300 src=figures/doublewell-eigenfunctions-msm.png />
 <p style="margin-left:30px; font-size:60%">
-Even in a double well potential, quantitatively <br/>
-resolving the eigenfunctions requires <br />
+Even in a double well potential quantitatively,  <br/>
+resolving the eigenfunctions requires <br/>
 more than two MSM states.
 </p>
 </div>
 
 - Difficulty of interpretation is proportional to the number of states
     - And many are needed for accurate predictions.
-- Even tougher to visualize the eigenprocesses when the states are implicitly defined (e.g. RMSD)
+- Tougher to visualize, analyze the eigenprocesses when the states are implicitly defined (e.g. RMSD)
 
 
 
 ---
-title: What's an HMM?
+title: What's an Hidden Markov Model?
 
 <div style="position:relative; top:-50px" class="vcenter">
     <img style="float:left;" width=500 src="figures/HMM_PGM.png"/>
     <div style="float:right; font-size:90%">
     $$ S_0 \sim \operatorname{Multinomial}(\pi) $$
     $$ S_{t+1} \sim \operatorname{Multinomial}(\mathbf{T}_{s_t}) $$
-    $$ X_{t} \sim f(\,\cdot\,; \theta_{s_t}) $$
+    $$ \mathbf{X}_{t} \sim f(\,\cdot\,; \theta_{s_t}) $$
     </div>
     <div style="clear:both"></div>
 </div>
@@ -222,20 +222,24 @@ title: What's an HMM?
 - Each state is equipped with an *output distribution* $f(\mathbf{x}; \theta_s)$, which need not be orthogonal.
 
 <div style="font-size:90%"> $$
-f(\mathbf{x}; \theta_{s_t}) = \mathbb{P}(X_t = \mathbf{x} | S_t = s)
+f(\mathbf{x}; \theta_{s}) = \mathbb{P}(\mathbf{X}_t = \mathbf{x} | S_t = s)
 $$ </div>
 
 
 ---
 title: Likelihood function
 
-Joint distribution over a data *and* state sequence from $0$ to $t$
+<ul><li>
+Joint distribution over data <i>and</i> state sequence from $0$ to $t$:
+</ul></li>
 
-<div> $$
+<div> $$    
 \mathbb{P}(\mathbf{x}_{0:t}, s_{0:t}) = \pi_{s_0} f(\mathbf{x}_0; \theta_{s_0}) \prod_{i=1}^t \bold{T}_{s_t, s_{t+1}} \cdot f(\mathbf{x}_t; \theta_{s_t})
 $$ <div>
 
-Likelihood formally requires summing over all possible paths
+<ul><li>
+Likelihood of the data formally requires summing over all possible hidden paths
+</ul></li>
 
 <div> $$
 \mathcal{L} = \mathbb{P}(\mathbf{x}_{0:t} | \mathbf{T}, \theta) = \sum_{\{s_{0:t}\}} \mathbb{P}(\mathbf{x}_{0:t}, s_{0:t}) 
@@ -244,6 +248,8 @@ $$ </div>
 
 ---
 title: Learning the model
+
+- Maximize the probability that the model would *generate* the observed data, if we sampled from the HMM.
 
 <div>
 $$
@@ -255,18 +261,68 @@ $$
 $$
 </div>
 
-- We fit the *maximum likelihood* model, adjusting the transition matrix, states' means, and (co)variances.
-- Maximize the probability that the model would *generate* the observed data, if we sampled from the HMM.
+- All the parameters (transition matrix, states' means, and (co)variances) are optimized for the *maximum likelihood* model.
 
 ---
 title: Learning the model
-subtitle: Baum-Welch (EM)
+subtitle: Baum-Welch (EM) Iterates These Two Steps
 
 - E-step: computed expected hidden state sequence, given current $\mathbf{T}, \theta$.
     - Distribution over the states at each time: $\mathbb{P}(S_t = i)$
     - Computational complexity: $O(T \, N^2)$
 - M-step: Find new $\mathbf{T}, \theta$ that maximize likelihood, with $S$ fixed as above
     - Fitting gaussian to data, maximum likelihood reversible transition matrix.
+
+
+---
+title: MSM/HMM Tradeoffs
+subtitle: Gains in using the HMM over the MSM
+
+<img style="float:right; position:relative; top:-120px" height=550px src="figures/doublewell-hmm-and-msm.png" />
+
+
+- None of the arbitrariness of the MSM state decomposition
+    - The state locations and widths can be <span style="font-weight:bold"> optimized</span>
+- All of the ML machinery is now available
+    - Cross validation
+    - Model selection (AIC, BIC)
+- Direct macrostate models
+
+
+---
+title: MSM/HMM Tradeoffs
+subtitle: Losses in using the HMM over the MSM
+
+- Evolution of $X_t$ in the HMM is _not_ Markovian.
+    - <span>$\mathbb{P}(X_t | X_{t-1}, X_{t-2}, \ldots) \neq \mathbb{P}(X_t | X_{t-1} )$</span>
+- HMM is _not_ a direct discretization of the transfer operator.
+    - Connections to spectral theory / operators are weaker.
+- Each conformation $x_t$ is _not_ uniquely assigned to a single state.
+- Fitting with very large numbers of states is not practical.
+
+
+
+---
+title: Implementation
+subtitle: CPU (SSE+OpenMP), CUDA
+
+<pre class="prettyprint" style="position:relative; top:-20px" data-lang="python">
+>>> import numpy as np
+>>> import mdtraj as md
+>>>
+>>> trajectory = md.load('trajectory.xtc', top='structure.pdb')
+>>> distances = md.compute_distances(trajectory, np.loadtxt('AtomIndices.dat'))
+>>>
+>>> from mixtape.ghmm import GaussianFusionHMM
+>>> model = GaussianFusionHMM(n_states=4, n_features=len(atom_indices), platform=<b>'cuda'</b>)
+>>> model.fit([distances])
+>>>
+>>> print model.transmat_
+[[ 0.966  0.033  0.001  0.001]
+ [ 0.002  0.945  0.002  0.051]
+ [ 0.001  0.012  0.959  0.028]
+ [ 0.021  0.038  0.029  0.912 ]]
+</pre>
 
 
 ---
@@ -328,57 +384,57 @@ $$
 ^{(k+1)} \sigma^2_i = \frac{\sum_t \gamma_i(t) (\mathbf{x}_t-\mu_i)^2}{\sum_t \gamma_i(t)}
 $$
 
-<div>$$
-^{(k+1)} \mathbf{T} = \underset{\mathbf{T}} {\operatorname{argmax}} \sum_{ij} \log (\mathbf{T}_{ij}) \sum_t \xi_{ij}(t)
-$$</div>
+<div>$$\begin{aligned}
+^{(k+1)} \mathbf{T} &amp; = \underset{\mathbf{T}} {\operatorname{argmax}} \sum_{ij} \log (\mathbf{T}_{ij}) \sum_t \xi_{ij}(t) \\
+&amp; \text{  subject to } \pi_i \mathbf{T}_{ij} = \pi_j \mathbf{T}_{ji}
+\end{aligned}$$</div>
 
 <!-- --- -->
 <!-- title: L1 Regularization -->
 
 ---
-title: Tradeoffs
-subtitle: Losses in using the HMM over the MSM
-
-- Evolution of $X_t$ in the HMM is _not_ Markovian.
-    - <span>$\mathbb{P}(X_t | X_{t-1}, X_{t-2}, \ldots) \neq \mathbb{P}(X_t | X_{t-1} )$</span>
-- HMM is _not_ a direct discretization of the transfer operator.
-    - Connections to spectral theory / operators are weaker.
-- Each conformation $X_t$ is _not_ uniquely assigned to a single state.
-- Fitting with very large numbers of states is not practical.
+title: Applications
+class: segue dark nobackground
 
 ---
-title: Tradeoffs
-subtitle: Gains in using the HMM over the MSM
+title: Met-enkephalin
+subtitle: (Tyr-Gly-Gly-Phe-Met)
 
-<img style="float:right; position:relative; top:-120px" height=550px src="figures/doublewell-hmm-and-msm.png" />
-
-
-- None of the arbitrariness of the MSM state decomposition
-    - The state locations and widths can be <span style="font-weight:bold"> optimized</span>
-- All of the ML machinery is now available
-    - Cross validation
-    - Model selection (AIC, BIC)
-- Direct macrostate models
-
+<img height=380 style="float:left;" src=figures/met-enk-ghmm-timescales.png />
+<div style="float:right;"> <img height=300 src=figures/1PLX.png /> <p style="text-align:center"> 1PLX </p> </div>
 
 ---
-title: Implementation
-subtitle: CPU (SSE+OpenMP), CUDA
+title: Met-enkephalin
+subtitle: 2-state HMM
 
-<pre class="prettyprint" data-lang="python">
->>> import numpy as np
->>> import mdtraj as md
->>>
->>> trajectory = md.load('trajectory.xtc', top='structure.pdb')
->>> distances = md.compute_distances(trajectory, np.loadtxt('AtomIndices.dat'))
->>>
->>> from mixtape.ghmm import GaussianFusionHMM
->>> model = GaussianFusionHMM(n_states=4, n_features=len(atom_indices), platform=<b>'cuda'</b>)
->>> model.fit([distances])
->>>
->>> print model.transmat_
-[[ 0.966  0.033  0.001  0.001]
- [ 0.002  0.945  0.002  0.051]
- [ 0.001  0.012  0.959  0.028]
- [ 0.021  0.038  0.029  0.912 ]]
-</pre>
+<div style="float:left;">
+    <img height=330 src=figures/met-enk-ghmm-2-state-model-s1.png /> <p>"Unfolded"</p>
+</div>
+<div style="float:right;" >
+    <img height=330
+    src=figures/met-enk-ghmm-2-state-model-s2.png />
+    <p>Hairpin</p>
+</div>
+
+---
+title: Met-enkephalin
+subtitle: 3-state HMM
+
+<div style="float:left;">
+    <img height=200 style="margin-left:50px" src=figures/met-enk-ghmm-3-state-model-s1.png /><br/>
+    <img height=200 style="margin-left:50px" src=figures/met-enk-ghmm-3-state-model-s2.png />
+    <p style="text-align:center"> "Unfolded" </p>
+</div>
+<div style="float:right;" > 
+    <img height=330 src=figures/met-enk-ghmm-3-state-model-s3.png />
+    <p style="text-align:center">Hairpin (26%)</p>
+</div>
+
+---
+title: Met-enkephalin
+subtitle: 32-state HMM
+
+
+<img height=380 src="figures/met-enkaphalin-3-state-hmm-vs-data-timeseries-0.png" />
+<img height=380 src="figures/met-enkaphalin-3-state-hmm-vs-data-timeseries-1.png" />
+<img height=380 src="figures/met-enkaphalin-3-state-hmm-vs-data-timeseries-2.png" />
