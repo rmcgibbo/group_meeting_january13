@@ -35,7 +35,7 @@ URL: https://code.google.com/p/io-2012-slides
   </script>
 
   <!-- MathJax support  -->
-  <!--  <script type="text/x-mathjax-config"> 
+  <script type="text/x-mathjax-config"> 
   MathJax.Hub.Config({
     extensions: ["tex2jax.js"],
     jax: ["input/TeX", "output/HTML-CSS"],
@@ -54,7 +54,7 @@ URL: https://code.google.com/p/io-2012-slides
     "HTML-CSS": { availableFonts: ["TeX"] }
   });
   </script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 </head>
 
@@ -66,20 +66,10 @@ URL: https://code.google.com/p/io-2012-slides
 
     <h1 style="right:5px;"> <div style="position:relative; left:-50px"> Hidden Markov Models are Better </div></h1>
     <h2></h2>
-    <p> <span  style="position:relative; left:-50px"> Robert McGibbon </span><br/> <span  style="position:relative; left:-50px"> Pande Group Meeting. January 13, 2014 </span></p>
+    <p> <span  style="position:relative; left:-50px"> Robert McGibbon </span><br/> <span  style="position:relative; left:-50px"> Pande Group Meeting. Jan. 13, 2014 </span></p>
   </hgroup>
 </slide>
 
-
-<slide  >
-  
-    <hgroup>
-      <h2></h2>
-      <h3></h3>
-    </hgroup>
-    <article ></article>
- 
-</slide>
 
 <slide  >
   
@@ -497,6 +487,20 @@ $$
  
 </slide>
 
+<slide  >
+  
+    <hgroup>
+      <h2>Implementation</h2>
+      <h3>Speed</h3>
+    </hgroup>
+    <article ><div style="position:relative; top:-50px" class="vcenter flexbox">
+    <img height=400 src="figures/traintime.png" />
+</div>
+
+<p>EM converges in 10-100 iterations</p></article>
+ 
+</slide>
+
 <slide class="segue dark nobackground" >
   
     <!-- <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside> -->
@@ -577,11 +581,7 @@ $$</p>
 <div>$$\begin{aligned}
 ^{(k+1)} \mathbf{T} &amp; = \underset{\mathbf{T}} {\operatorname{argmax}} \sum_{ij} \log (\mathbf{T}_{ij}) \sum_t \xi_{ij}(t) \\
 &amp; \text{  subject to } \pi_i \mathbf{T}_{ij} = \pi_j \mathbf{T}_{ji}
-\end{aligned}$$</div>
-
-<!-- --- -->
-
-<!-- title: L1 Regularization --></article>
+\end{aligned}$$</div></article>
  
 </slide>
 
@@ -639,6 +639,23 @@ $$</p>
 <div style="float:right;" > 
     <img height=330 src=figures/met-enk-ghmm-3-state-model-s3.png />
     <p style="text-align:center">Hairpin (26%)</p>
+</div></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>Met-enkephalin</h2>
+      <h3>3-state HMM</h3>
+    </hgroup>
+    <article ><div style="position:relative; top:-50px" class="vcenter flexbox">
+<img height=300 src="figures/logtransmat-overlap-3.png" />
+
+$$
+O_{ij} = \frac{\int_\mathbf{x}d\mathbf{x} \, f(\mathbf{x}; \theta_i) f(\mathbf{x}; \theta_j)}{\sqrt{\int_\mathbf{x} d\mathbf{x}\, f(\mathbf{x}; \theta_i)} \sqrt{\int_\mathbf{x} d\mathbf{x}\, f(\mathbf{x}; \theta_j)}}
+$$
+
 </div></article>
  
 </slide>

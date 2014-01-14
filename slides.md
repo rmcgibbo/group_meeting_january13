@@ -1,7 +1,7 @@
 % title: <div style="position:relative; left:-50px"> Hidden Markov Models are Better </div>
-<!-- % subtitle: <div style="position:relative; left:-50px"> with Applications to Ubiquitin </div> -->
+% subtitle:
 % author: <span  style="position:relative; left:-50px"> Robert McGibbon </span>
-% author: <span  style="position:relative; left:-50px"> Pande Group Meeting. January 13, 2014 </span>
+% author: <span  style="position:relative; left:-50px"> Pande Group Meeting. Jan. 13, 2014 </span>
 % thankyou: Thanks Everyone!
 % thankyou_details: Especially Vijay, Bharath, Gert, Christian, and Matt.
 % contact: <span>www</span> <a href="http://rmcgibbo.appspot.com/">website</a>
@@ -324,6 +324,18 @@ subtitle: CPU (SSE+OpenMP), CUDA
  [ 0.021  0.038  0.029  0.912 ]]
 </pre>
 
+---
+
+title: Implementation
+subtitle: Speed
+
+<div style="position:relative; top:-50px" class="vcenter flexbox">
+	<img height=400 src="figures/traintime.png" />
+</div>
+
+EM converges in 10-100 iterations
+
+
 
 ---
 title: Fitting the HMM with Baum-Welch
@@ -389,9 +401,6 @@ $$
 &amp; \text{  subject to } \pi_i \mathbf{T}_{ij} = \pi_j \mathbf{T}_{ji}
 \end{aligned}$$</div>
 
-<!-- --- -->
-<!-- title: L1 Regularization -->
-
 ---
 title: Applications
 class: segue dark nobackground
@@ -428,6 +437,20 @@ subtitle: 3-state HMM
 <div style="float:right;" > 
     <img height=330 src=figures/met-enk-ghmm-3-state-model-s3.png />
     <p style="text-align:center">Hairpin (26%)</p>
+</div>
+
+
+---
+title: Met-enkephalin
+subtitle: 3-state HMM
+
+<div style="position:relative; top:-50px" class="vcenter flexbox">
+<img height=300 src="figures/logtransmat-overlap-3.png" />
+
+$$
+O_{ij} = \frac{\int_\mathbf{x}d\mathbf{x} \, f(\mathbf{x}; \theta_i) f(\mathbf{x}; \theta_j)}{\sqrt{\int_\mathbf{x} d\mathbf{x}\, f(\mathbf{x}; \theta_i)} \sqrt{\int_\mathbf{x} d\mathbf{x}\, f(\mathbf{x}; \theta_j)}}
+$$
+
 </div>
 
 ---

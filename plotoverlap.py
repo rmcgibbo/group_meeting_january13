@@ -12,9 +12,12 @@ def iterobjects(fn):
         if line.startswith('#'):
             print line
             continue
-        obj = json.loads(line)
-        # print obj['n_states'], obj['train_lag_time']
-        yield obj
+        try:
+            obj = json.loads(line)
+            # print obj['n_states'], obj['train_lag_time']
+            yield obj
+        except ValueError:
+            pass
 
 
 def gaussianoverlap(means, vars):
@@ -35,20 +38,23 @@ def gaussianoverlap(means, vars):
     return log_overlap
 
 
-for obj in iterobjects('hmm-fit-32.superpose.jsonlines'):
+for obj in iterobjects('/home/rmcgibbo/projects/met-enkephalin/ghmm/hmm-fit.superpose.jsonlines'):
     transmat = np.array(obj['transmat'])
-    pp.figure()
-    #pp.subplot(1,3,1)
-    #pp.imshow(transmat, interpolation='none')
-    #pp.colorbar()
+    pp.figure(figsize=(10,5))
+    pp.subplot(1,2,1)
+    pp.title('Log Transmat')
+    pp.imshow(np.log(transmat), interpolation='none')
+    pp.colorbar()
 
-    #pp.subplot(1,3,2)
+    pp.subplot(1,2,2)
+    pp.title('Normalized Log Overlap')
     overlap = gaussianoverlap(np.array(obj['means']), np.array(obj['vars']))
-    #pp.imshow(overlap, interpolation='none')
+    pp.imshow(overlap, interpolation='none')
+    pp.colorbar()
 
     #pp.subplot(1,3,3)
-    pp.ylabel('overlap'); pp.xlabel('transmat')
-    pp.scatter(np.log(transmat).flatten(), overlap.flatten())
+    #pp.ylabel('overlap'); pp.xlabel('transmat')
+    #pp.scatter(np.log(transmat).flatten(), overlap.flatten())
 
     #pp.colorbar()
     pp.show()
